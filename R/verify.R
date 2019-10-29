@@ -1,4 +1,3 @@
-library(assertthat)
 #' if names of `x` aren't as expected, report that
 verify_columns <- function(x)
 {
@@ -20,29 +19,29 @@ verify_columns <- function(x)
     "modelRunDateTime",
     "modelNameSourceCode"
   )
-  
+
   cur_names <- names(x)
-  
+
   t1 <- cur_names[!(cur_names %in% expt)]
-  
+
   assert_that(
-    length(t1) == 0, 
+    length(t1) == 0,
     msg = paste(
-      paste(t1, collapse = " & "), 
+      paste(t1, collapse = " & "),
       "is found in `names(x)`, but shouldn't be."
     )
   )
-  
+
   t1 <- expt[!(expt %in% cur_names)]
-  
+
   assert_that(
-    length(t1) == 0, 
+    length(t1) == 0,
     msg = paste(
-      paste(t1, collapse = " & "), 
+      paste(t1, collapse = " & "),
       "is not found in `names(x)`, but should be."
     )
   )
-  
+
   invisible(x)
 }
 
@@ -60,15 +59,15 @@ check_char_count <- function(x)
     "modelRunAttributes" = 500,
     "modelRunMemberDesc" = 500
   )
-  
+
   for (var_name in names(max_counts)) {
     max_count <- max(stringr::str_count(x[[var_name]]))
     assert_that(
       max_count <= max_counts[var_name],
-      msg = paste0("Max for ", var_name, " is ", max_count, 
+      msg = paste0("Max for ", var_name, " is ", max_count,
                    "; it should be <= ", max_counts[var_name])
     )
   }
-  
+
   invisible(x)
 }

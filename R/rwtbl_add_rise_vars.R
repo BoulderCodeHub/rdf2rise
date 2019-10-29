@@ -2,6 +2,17 @@
 #'
 #' `rwtbl_add_rise_vars()` takes in a rwtbl and adds in the variables required
 #' for publication in RISE.
+#'
+#' @param rwtbl A tbl_df with expected columns. Likely this is output from
+#'   [`RWDataPlyr::rdf_to_rwtbl2()`]
+#'
+#' @param ui_vars User specified values (as a list) for the `sourceCode`,
+#' `modelNameSourceCode`, `status`, and `modelRunDescription` fields in the
+#'   RISE json file.
+#'
+#' @return tbl with all required fields for RISE json file
+#'
+#' @export
 
 add_rise_vars_to_rwtbl <- function(rwtbl, ui_vars)
 {
@@ -16,7 +27,7 @@ add_rise_vars_to_rwtbl <- function(rwtbl, ui_vars)
   last_update <- get_time_with_offset(now())
 
   r2 <- rwtbl %>%
-    mutate(
+    dplyr::mutate(
       sourceCode = ui_vars$sourceCode,
       # set times to noon and add in the GMT offset of -07:00
       # subtract 1 second to get from 24:00 to 23:99 so month/date are correct
@@ -36,15 +47,15 @@ add_rise_vars_to_rwtbl <- function(rwtbl, ui_vars)
       SlotName = paste(ObjectName, SlotName, sep = "."),
       TraceNumber = as.character(TraceNumber)
     ) %>%
-    rename(
+    dplyr::rename(
       locationSourceCode = ObjectName,
       result = Value,
       parameterSourceCode = SlotName,
       modelRunSourceCode = Scenario,
       modelRunMemberSourceCode = TraceNumber
     ) %>%
-    select(-Timestep, -Year, -Month, -Unit, -ObjectSlot, -RulesetFileName,
-           -InputDMIName)
+    dplyr::select(-Timestep, -Year, -Month, -Unit, -ObjectSlot,
+                  -RulesetFileName, -InputDMIName)
 
   # check that everything worked
   verify_columns(r2)

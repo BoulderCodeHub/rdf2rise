@@ -1,6 +1,17 @@
-#' Converts a tbl to the RISE JSON format
+#' Converts a tbl_df to the RISE JSON format
 #'
-#' `tbl_to_rise_json()` converts the tbl to the RISE json format.
+#' `tbl_to_rise_json()` converts a tbl to the RISE json format.
+#'
+#' The RISE json format is a specific json format that (1) has one complete
+#' object per row and (2) does not include any arrays. Each object on a row
+#' contains 16 required object-value pairs.
+#'
+#' @param tbl A tbl_df with all required columns (fields for the RISE json
+#'   file). Likely output from [`rwtbl_add_rise_vars()`].
+#'
+#' @return Invisibly returns data in RISE json format
+#'
+#' @export
 
 tbl_to_rise_json <- function(tbl)
 {
@@ -12,5 +23,5 @@ tbl_to_rise_json <- function(tbl)
   r3 <- stringr::str_remove(r3, "\\]")
   r3 <- stringr::str_replace_all(r3, "\\}\\,\\{", "}\n{")
 
-  r3
+  invisible(r3)
 }

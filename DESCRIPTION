@@ -13,8 +13,12 @@ Description: rdf2rise is a package to help translate
 URL: https://github.com/BoulderCodeHub/rdf2rise
 BugReports: https://github.com/BoulderCodeHub/rdf2rise/issues
 Imports:
+  assertthat,
+  dplyr,
   jsonlite,
-  lubridate
+  lubridate,
+  magrittr,
+  stringr
 Suggests:
   RWDataPlyr,
   testthat
