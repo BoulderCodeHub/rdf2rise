@@ -3,7 +3,7 @@ rdf2rise
 
 ## Overview
 
-rdf2rise is a package to help translate [RiverWare^TM^](http://www.riverware.org) rdf files into the JSON files necessary to publish data to the Reclamation Information Sharing Environment (RISE). It is intended for pushing modeled data that is not stored in other Reclamation databases to the RISE data base. It works by making guesses about certain fields, so it can be used in a fully automatic fashion, but allows the user to easily override those gueses in a tidy process. 
+rdf2rise is a package to help translate [RiverWare<sup>TM</sup>](http://www.riverware.org) rdf files into the JSON files necessary to publish data to the Reclamation Information Sharing Environment (RISE). It is intended for pushing modeled data that is not stored in other Reclamation databases to the RISE data base. It works by making guesses about certain fields, so it can be used in a fully automatic fashion, but allows the user to easily override those gueses in a tidy process. 
 
 ## Installation
 
