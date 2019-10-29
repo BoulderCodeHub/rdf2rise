@@ -11,7 +11,7 @@ rdf2rise can be installed from GitHub:
 
 ```
 # install.packages("devtools")
-devtools::install_github("BoulderCodeHub/RWDataPlyr")
+devtools::install_github("BoulderCodeHub/rdf2rise")
 ```
 
 ## Usage
