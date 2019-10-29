@@ -1,4 +1,4 @@
-#' if names of `x` aren't as expected, report that
+# if names of `x` aren't as expected, report that
 verify_columns <- function(x)
 {
   expt <- c(
@@ -45,7 +45,7 @@ verify_columns <- function(x)
   invisible(x)
 }
 
-#' Fail if any of the character counts are higher than expected
+# Fail if any of the character counts are higher than expected
 check_char_count <- function(x)
 {
   max_counts <- c(
