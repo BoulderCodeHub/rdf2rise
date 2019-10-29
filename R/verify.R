@@ -90,3 +90,31 @@ check_rwtbl <- function(rwtbl)
 
   invisible(rwtbl)
 }
+
+# ensure the provided ui_vars is specified correctly
+check_ui_vars <- function(ui_vars)
+{
+  assert_that(class(ui_vars) == "list")
+  assert_that(length(ui_vars) == 4)
+
+  req_names <- c("sourceCode", "modelNameSourceCode", "status",
+                 "modelRunDescription")
+
+  x <- req_names %in% names(ui_vars)
+  assert_that(
+    all(x),
+    msg = paste(
+      paste(req_names[!x], collapse = ","),
+      "are required names in `ui_vars`, but they are not specified"
+    )
+  )
+
+  for (n in names(ui_vars)) {
+    assert_that(
+      length(ui_vars[[n]]) == 1,
+      msg = paste0("`ui_vars[[", n, "]]` should only have a length of 1")
+    )
+  }
+
+  invisible(ui_vars)
+}

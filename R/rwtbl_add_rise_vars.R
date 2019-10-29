@@ -17,6 +17,7 @@
 add_rise_vars_to_rwtbl <- function(rwtbl, ui_vars)
 {
   check_rwtbl(rwtbl)
+  check_ui_vars(ui_vars)
 
   # assume that the run date has the same tmezone as the computer that is
   # running this code
