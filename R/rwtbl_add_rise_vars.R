@@ -40,7 +40,7 @@ add_rise_vars_to_rwtbl <- function(rwtbl, ui_vars)
       status = ui_vars$status,
       lastUpdate = last_update,
       modelRunDescription = ui_vars$modelRunDescription,
-      modelRunAttributes = get_modelRunAttributes(Scenario, RulesetFileName),
+      modelRunAttributes = get_modelRunAttributes(InputDMIName, RulesetFileName),
       modelRunDateTime = run_date,
       resultAttributes = "null",
       modelRunName = Scenario,
