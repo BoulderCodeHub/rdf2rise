@@ -1,11 +1,27 @@
 Package: rdf2rise
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Translate RDF Files to RISE JSON Files
+Version: 0.0.0.9000
+Author@R:c(person("Alan", "Butler", ,"rabutler@usbr.gov", c("aut", "cre"))) 
+Description: rdf2rise is a package to help translate 
+  'RiverWare'(TM)<http://www.riverware.org/> "rdf"" files into the json files 
+  necessary to publish data to the Reclamation Information Sharing Environment 
+  (RISE). It is intended for pushing modeled data that is not stored in other 
+  Reclamation databases to the RISE data base. It works by making guesses about 
+  certain fields, so it can be used in a fully automatic fashion, but allows the 
+  user to easily override those gueses in a tidy process. 
+URL: https://github.com/BoulderCodeHub/rdf2rise
+BugReports: https://github.com/BoulderCodeHub/rdf2rise/issues
+Imports:
+  jsonlite,
+  lubridate
+Suggests:
+  RWDataPlyr,
+  testthat
+License: CC0
+Copyright: This software is in the public domain because it contains materials
+    that originally came from the U.S. Bureau of Reclamation, an agency of the
+    U.S. Department of Interior.
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
