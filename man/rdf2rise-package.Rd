@@ -22,4 +22,8 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Alan Butler \email{rabutler@usbr.gov}
+
+}
 \keyword{internal}

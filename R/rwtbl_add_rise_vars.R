@@ -14,7 +14,7 @@
 #'
 #' @export
 
-add_rise_vars_to_rwtbl <- function(rwtbl, ui_vars)
+rwtbl_add_rise_vars <- function(rwtbl, ui_vars)
 {
   check_rwtbl(rwtbl)
   check_ui_vars(ui_vars)

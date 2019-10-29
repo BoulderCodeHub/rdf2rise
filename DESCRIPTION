@@ -2,7 +2,7 @@ Package: rdf2rise
 Type: Package
 Title: Translate RDF Files to RISE JSON Files
 Version: 0.0.0.9000
-Author@R: c(person("Alan", "Butler", ,"rabutler@usbr.gov", c("aut", "cre"))) 
+Authors@R: c(person("Alan", "Butler", ,"rabutler@usbr.gov", c("aut", "cre"))) 
 Description: rdf2rise is a package to help translate 
   'RiverWare'(TM)<http://www.riverware.org/> "rdf"" files into the json files 
   necessary to publish data to the Reclamation Information Sharing Environment 
