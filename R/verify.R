@@ -71,3 +71,22 @@ check_char_count <- function(x)
 
   invisible(x)
 }
+
+# ensure the rwtbl has all required columns
+check_rwtbl <- function(rwtbl)
+{
+  rwtbl_req_cols <- c("Timestep", "TraceNumber","ObjectName", "SlotName",
+                      "Value", "Unit", "RulesetFileName", "InputDMIName")
+
+  x <- rwtbl_req_cols %in% names(rwtbl)
+
+  assert_that(
+    all(x),
+    msg = paste(
+      paste(rwtbl_req_cols[!x], collapse = ", "),
+      "are required column names, but were not found in the provided `rwtbl`."
+    )
+  )
+
+  invisible(rwtbl)
+}
