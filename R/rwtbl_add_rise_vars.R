@@ -44,7 +44,7 @@ add_rise_vars_to_rwtbl <- function(rwtbl, ui_vars)
       modelRunDateTime = run_date,
       resultAttributes = "null",
       modelRunName = Scenario,
-      modelRunMemberDesc = get_modelRunMemberDesc(Scenario, TraceNumber),
+      modelRunMemberDesc = paste0(Scenario," - Trace ", TraceNumber),
       modelNameSourceCode = ui_vars$modelNameSourceCode,
       SlotName = paste(ObjectName, SlotName, sep = "."),
       TraceNumber = as.character(TraceNumber)
