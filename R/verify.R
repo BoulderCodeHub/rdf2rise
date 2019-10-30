@@ -75,6 +75,8 @@ check_char_count <- function(x)
 # ensure the rwtbl has all required columns
 check_rwtbl <- function(rwtbl)
 {
+  assert_that(is(rwtbl, "tbl_df"))
+
   rwtbl_req_cols <- c("Timestep", "TraceNumber","ObjectName", "SlotName",
                       "Value", "Unit", "RulesetFileName", "InputDMIName",
                       "Scenario", "ObjectSlot")
@@ -86,6 +88,18 @@ check_rwtbl <- function(rwtbl)
     msg = paste(
       paste(rwtbl_req_cols[!x], collapse = ", "),
       "are required column names, but were not found in the provided `rwtbl`."
+    )
+  )
+
+  req_atts <- c("mrm_config_name", "description", "create_date")
+
+  x <- req_atts %in% names(attributes(rwtbl))
+
+  assert_that(
+    all(x),
+    msg = paste0(
+      "The following are required attributes but were not found in the `rwtbl`:",
+      "\n  - ", paste(req_atts[!x], collapse = ", ")
     )
   )
 
