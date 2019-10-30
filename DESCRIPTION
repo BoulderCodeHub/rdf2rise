@@ -21,7 +21,7 @@ Imports:
   stringr
 Suggests:
     RWDataPlyr,
-    testthat,
+    testthat (>= 2.1.0),
     covr
 License: CC0
 Copyright: This software is in the public domain because it contains materials
