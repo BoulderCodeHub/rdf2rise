@@ -53,7 +53,7 @@ rwtbl_add_rise_vars <- function(rwtbl, ui_vars)
     dplyr::rename(
       locationSourceCode = ObjectName,
       result = Value,
-      parameterSourceCode = SlotName,
+      parameterSourceCode = ObjectSlot,
       modelRunSourceCode = Scenario,
       modelRunMemberSourceCode = TraceNumber
     ) %>%
