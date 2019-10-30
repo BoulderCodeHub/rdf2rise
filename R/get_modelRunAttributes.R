@@ -17,7 +17,8 @@ get_modelRunAttributes <- function(input_dmi, ruleset, tbl_atts)
 # gets just the ruleset name from a file path to the ruleset
 get_ruleset <- function(ruleset)
 {
-  tmp <- simplify2array(stringr::str_split(ruleset, "/"))
+  # split on / or \\
+  tmp <- simplify2array(stringr::str_split(ruleset, "(/|\\\\)"))
   tmp <- tmp[nrow(tmp),]
 
   tmp
