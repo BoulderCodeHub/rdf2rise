@@ -27,7 +27,8 @@ rwtbl_add_rise_vars <- function(rwtbl, ui_vars)
   ) %>%
     get_time_with_offset()
 
-  last_update <- get_time_with_offset(now())
+  last_update <- get_time_with_offset(lubridate::now())
+  tbl_atts <- attributes(rwtbl)
 
   r2 <- rwtbl %>%
     dplyr::mutate(
@@ -41,7 +42,8 @@ rwtbl_add_rise_vars <- function(rwtbl, ui_vars)
       status = ui_vars$status,
       lastUpdate = last_update,
       modelRunDescription = ui_vars$modelRunDescription,
-      modelRunAttributes = get_modelRunAttributes(InputDMIName, RulesetFileName),
+      modelRunAttributes =
+        get_modelRunAttributes(InputDMIName, RulesetFileName, tbl_atts),
       modelRunDateTime = run_date,
       resultAttributes = "null",
       modelRunName = Scenario,
@@ -57,7 +59,7 @@ rwtbl_add_rise_vars <- function(rwtbl, ui_vars)
       modelRunSourceCode = Scenario,
       modelRunMemberSourceCode = TraceNumber
     ) %>%
-    dplyr::select(-Timestep, -Year, -Month, -Unit, -ObjectSlot,
+    dplyr::select(-Timestep, -Year, -Month, -Unit, -SlotName,
                   -RulesetFileName, -InputDMIName)
 
   # check that everything worked

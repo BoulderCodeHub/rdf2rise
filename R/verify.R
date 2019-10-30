@@ -76,7 +76,8 @@ check_char_count <- function(x)
 check_rwtbl <- function(rwtbl)
 {
   rwtbl_req_cols <- c("Timestep", "TraceNumber","ObjectName", "SlotName",
-                      "Value", "Unit", "RulesetFileName", "InputDMIName")
+                      "Value", "Unit", "RulesetFileName", "InputDMIName",
+                      "Scenario", "ObjectSlot")
 
   x <- rwtbl_req_cols %in% names(rwtbl)
 

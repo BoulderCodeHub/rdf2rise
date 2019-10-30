@@ -1,12 +1,14 @@
 
 
-get_modelRunAttributes <- function(input_dmi, ruleset)
+get_modelRunAttributes <- function(input_dmi, ruleset, tbl_atts)
 {
   ruleset <- get_ruleset(ruleset)
 
   atts = paste0(
       "Ruleset: ", ruleset, "; ",
-      "Input DMI: ", input_dmi, ";"
+      "Input DMI: ", input_dmi, "; ",
+      "MRM Config: ", tbl_atts$mrm_config_name, "; ",
+      "MRM Desc: ", tbl_atts$description, ";"
     )
 
   atts
