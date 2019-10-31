@@ -9,7 +9,8 @@
 #' @param tbl A tbl_df with all required columns (fields for the RISE json
 #'   file). Likely output from [`rwtbl_add_rise_vars()`].
 #'
-#' @return Invisibly returns data in RISE json format
+#' @return Invisibly returns data in RISE json format, currently just a
+#'   character vector of length == 1.
 #'
 #' @export
 

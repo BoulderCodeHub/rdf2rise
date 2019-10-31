@@ -11,7 +11,8 @@ tbl_to_rise_json(tbl)
 file). Likely output from \code{\link[=rwtbl_add_rise_vars]{rwtbl_add_rise_vars()}}.}
 }
 \value{
-Invisibly returns data in RISE json format
+Invisibly returns data in RISE json format, currently just a
+character vector of length == 1.
 }
 \description{
 \code{tbl_to_rise_json()} converts a tbl to the RISE json format.
