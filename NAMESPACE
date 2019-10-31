@@ -2,5 +2,6 @@
 
 export(rwtbl_add_rise_vars)
 export(tbl_to_rise_json)
+export(write_rise_json)
 importFrom(assertthat,assert_that)
 importFrom(magrittr,"%>%")
