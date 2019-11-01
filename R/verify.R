@@ -1,28 +1,9 @@
 # if names of `x` aren't as expected, report that
 verify_columns <- function(x)
 {
-  expt <- c(
-    "sourceCode",
-    "locationSourceCode",
-    "dateTime",
-    "result",
-    "status",
-    "lastUpdate",
-    "resultAttributes",
-    "parameterSourceCode",
-    "modelRunSourceCode",
-    "modelRunName",
-    "modelRunDescription",
-    "modelRunAttributes",
-    "modelRunMemberSourceCode",
-    "modelRunMemberDesc",
-    "modelRunDateTime",
-    "modelNameSourceCode"
-  )
-
   cur_names <- names(x)
 
-  t1 <- cur_names[!(cur_names %in% expt)]
+  t1 <- cur_names[!(cur_names %in% rise_json_req_obj)]
 
   assert_that(
     length(t1) == 0,
@@ -32,7 +13,7 @@ verify_columns <- function(x)
     )
   )
 
-  t1 <- expt[!(expt %in% cur_names)]
+  t1 <- expt[!(rise_json_req_obj %in% cur_names)]
 
   assert_that(
     length(t1) == 0,
@@ -77,9 +58,7 @@ check_rwtbl <- function(rwtbl)
 {
   assert_that(is(rwtbl, "tbl_df"))
 
-  rwtbl_req_cols <- c("Timestep", "TraceNumber","ObjectName", "SlotName",
-                      "Value", "Unit", "RulesetFileName", "InputDMIName",
-                      "Scenario", "ObjectSlot")
+  rwtbl_req_cols <- c(rwtbl_cols_for_rise, "Scenario", "ObjectSlot")
 
   x <- rwtbl_req_cols %in% names(rwtbl)
 

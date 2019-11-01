@@ -16,6 +16,10 @@
 
 tbl_to_rise_json <- function(tbl)
 {
+  nn <- names(tbl)
+  assert_that(nn %in% rise_json_req_obj)
+  assert_that(rise_json_req_obj %in% nn)
+
   # for every row in rdf:
 
   r3 <- jsonlite::toJSON(tbl, auto_unbox = TRUE)
