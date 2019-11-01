@@ -7,6 +7,13 @@ test_json <- scan(
   quiet = TRUE
 )
 
+gmt_plus <- scan(
+  "../CRSS-TestData_2019110116055901.json",
+  what = character(),
+  sep = "\n",
+  quiet = TRUE
+)
+
 ifile <- "../KeySlots.rdf"
 keep_cols <- c("Timestep", "TraceNumber","ObjectName", "SlotName", "Value",
                "Unit", "RulesetFileName", "InputDMIName")
@@ -24,22 +31,28 @@ rise_tbl <- rwtbl_add_rise_vars(good_tbl, good_ui)
 # differ everytime the file is generated
 remove_lastUpdate <- function(x)
 {
-  print(paste0("****\n", x))
+  #print(paste0("****\n", x))
   # "lastUpdate":"2019-11-01 11:09:24-06:00"
   lu_pattern <- paste(
     '\"lastUpdate\":\"\\d{4}-\\d{2}-\\d{2}',
-    '\\d{2}:\\d{2}:\\d{2}-\\d{2}:\\d{2}\"'
+    '\\d{2}:\\d{2}:\\d{2}[-|+]\\d{2}:\\d{2}\"'
   )
 
   x <- simplify2array(stringr::str_split(x, lu_pattern))
-  print(paste0("***** X:\n", x))
+  #print(paste0("***** X:\n", x))
   x <- paste(x[1,], x[2,],sep = '')
   x
 }
 
-test_json <- paste(remove_lastUpdate(test_json), collapse = "\n")
+# meta testing -------------------------------
+# test the reomve_lastUpdate to ensure it works with + and - GMT offsets
+test_that("META - remove_lastUpdate test function is robust to GMT offsests", {
+  expect_identical(remove_lastUpdate(test_json), remove_lastUpdate(gmt_plus))
+})
+
 
 # tbl_to_rise_json ---------------------------
+test_json <- paste(remove_lastUpdate(test_json), collapse = "\n")
 
 test_that("tbl_to_rise_json matches as expected", {
   expect_type(x <- tbl_to_rise_json(rise_tbl), "character")
