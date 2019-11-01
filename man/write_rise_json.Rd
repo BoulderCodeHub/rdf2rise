@@ -21,3 +21,35 @@ sourceCode_YYYYMMDDHHMMSSMS.json, so this function creates a file following
 that naming convention. \code{sourceCode} is a field that exists in the json
 character object, so it is used for the file name.
 }
+\examples{
+ifile <- system.file(
+  'extdata/Scenario/ISM1988_2014,2007Dems,IG,Most',
+  "KeySlots.rdf",
+ package = "RWDataPlyr"
+)
+
+# get the tbl using RWDataPlyr
+rwtbl <- RWDataPlyr::rdf_to_rwtbl2(
+  ifile,
+  scenario = "test",
+  keep_cols = rwtbl_cols_for_rise
+)
+
+# manually specify some parameters:
+ui_vars <- list(
+  sourceCode = "CRSS-TestData",
+  modelNameSourceCode = "CRSS",
+  status = "Finalized Dec. 2012. To RISE v0.0.1",
+  modelRunDescription = "desc"
+)
+
+# get the rest of the parameters automatically
+rise_tbl <- rwtbl_add_rise_vars(rwtbl, ui_vars)
+
+# add then convert to the RISE json format
+rise_json <- tbl_to_rise_json(rise_tbl)
+
+# finally write the file
+write_rise_json(rise_json, path = tempdir())
+
+}

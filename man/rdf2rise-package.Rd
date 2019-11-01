@@ -4,15 +4,20 @@
 \name{rdf2rise-package}
 \alias{rdf2rise}
 \alias{rdf2rise-package}
-\title{rdf2rise: Translate RDF Files to RISE JSON Files}
+\title{rdf2rise: Translate rdf Files to RISE json Files}
 \description{
 rdf2rise is a package to help translate 
-  'RiverWare'(TM)<http://www.riverware.org/> "rdf"" files into the json files 
-  necessary to publish data to the Reclamation Information Sharing Environment 
-  (RISE). It is intended for pushing modeled data that is not stored in other 
-  Reclamation databases to the RISE data base. It works by making guesses about 
-  certain fields, so it can be used in a fully automatic fashion, but allows the 
-  user to easily override those gueses in a tidy process.
+    'RiverWare'(TM)<http://www.riverware.org/> "rdf"" files into the json files 
+    necessary to publish data to the Reclamation Information Sharing Environment 
+    (RISE). It is intended for pushing modeled data that is not stored in other 
+    Reclamation databases to the RISE data base. It works by making guesses  
+    about certain fields, so it can be used in a fully automatic fashion, but 
+    allows the user to easily override those gueses in a dplyr pipeline.
+}
+\details{
+RISE has 16 required objects in the json file. These can be found in
+\link{rise_json_req_obj}. See the package GitHub site for a table summarizing
+how these objects are created from the rdf & rwtbl file.
 }
 \seealso{
 Useful links:
