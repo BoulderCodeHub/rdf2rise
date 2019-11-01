@@ -5,9 +5,9 @@ source_code <- "CRSS-TestData"
 # .json file pattern:
 file_pattern <- paste0(source_code, "_", "[0-9]{16}", ".json")
 
-# TODO: add in test of actual json character from the test rdf data.
+# add in test of actual json character from the test rdf data.
 full_json <- scan(
-  "../CRSS-TestData_2019110111092669.json",
+  "../CRSS-TestData_2019110112212725.json",
   what = character(),
   sep = "\n",
   quiet = TRUE

@@ -2,6 +2,7 @@ library(RWDataPlyr)
 
 # initial setup -----------------------
 ifile <- "../KeySlots.rdf"
+
 keep_cols <- c("Timestep", "TraceNumber","ObjectName", "SlotName", "Value",
   "Unit", "RulesetFileName", "InputDMIName")
 
@@ -54,6 +55,9 @@ expt_cols <- c(
   "modelRunDateTime",
   "modelNameSourceCode"
 )
+
+
+
 test_that("rwtbl_add_rise_vars() returns as expected", {
   expect_is(x <- rwtbl_add_rise_vars(good_tbl, good_ui), "tbl_df")
   expect_equal(nrow(x), nrow(good_tbl))
