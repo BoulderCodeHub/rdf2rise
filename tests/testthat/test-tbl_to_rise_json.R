@@ -24,6 +24,7 @@ rise_tbl <- rwtbl_add_rise_vars(good_tbl, good_ui)
 # differ everytime the file is generated
 remove_lastUpdate <- function(x)
 {
+  print(paste0("****\n", x))
   # "lastUpdate":"2019-11-01 11:09:24-06:00"
   lu_pattern <- paste(
     '\"lastUpdate\":\"\\d{4}-\\d{2}-\\d{2}',
@@ -48,10 +49,12 @@ test_that("tbl_to_rise_json matches as expected", {
   # stamp of when the file was created
   expect_type(x <- tbl_to_rise_json(rise_tbl[1:10, ]), "character")
   # split into 10 entries, remove lastUpdate, and then collapse
-  x <- t(stringr::str_split_fixed(x, "\n", 10)) %>%
+  x2 <- t(stringr::str_split_fixed(x, "\n", 10))
+  expect_equal(dim(x2), c(10, 1))
+  x3 <- x2  %>%
     remove_lastUpdate() %>%
     paste(collapse = "\n")
-  expect_identical(x, test_json)
+  expect_identical(x3, test_json)
 })
 
 
