@@ -13,7 +13,7 @@ verify_columns <- function(x)
     )
   )
 
-  t1 <- expt[!(rise_json_req_obj %in% cur_names)]
+  t1 <- rise_json_req_obj[!(rise_json_req_obj %in% cur_names)]
 
   assert_that(
     length(t1) == 0,

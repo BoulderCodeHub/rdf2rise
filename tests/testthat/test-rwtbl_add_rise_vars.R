@@ -3,12 +3,13 @@ library(RWDataPlyr)
 # initial setup -----------------------
 ifile <- "../KeySlots.rdf"
 
-keep_cols <- c("Timestep", "TraceNumber","ObjectName", "SlotName", "Value",
-  "Unit", "RulesetFileName", "InputDMIName")
-
 bad_tbl <- rdf_to_rwtbl2(ifile, scenario = "DNF,CT,IG")
-bad_tbl2 <- rdf_to_rwtbl2(ifile, keep_cols = keep_cols)
-good_tbl <- rdf_to_rwtbl2(ifile, keep_cols = keep_cols, scenario = "DNF,CT,IG")
+bad_tbl2 <- rdf_to_rwtbl2(ifile, keep_cols = rwtbl_cols_for_rise)
+good_tbl <- rdf_to_rwtbl2(
+  ifile,
+  keep_cols = rwtbl_cols_for_rise,
+  scenario = "DNF,CT,IG"
+)
 
 bad_ui <- list(
   sourceCode = "CRSS-TestData",
@@ -37,30 +38,10 @@ test_that("rwtbl_add_rise_vars() errors correctly", {
 })
 
 # check return type/value ----------------
-expt_cols <- c(
-  "sourceCode",
-  "locationSourceCode",
-  "dateTime",
-  "result",
-  "status",
-  "lastUpdate",
-  "resultAttributes",
-  "parameterSourceCode",
-  "modelRunSourceCode",
-  "modelRunName",
-  "modelRunDescription",
-  "modelRunAttributes",
-  "modelRunMemberSourceCode",
-  "modelRunMemberDesc",
-  "modelRunDateTime",
-  "modelNameSourceCode"
-)
-
-
 
 test_that("rwtbl_add_rise_vars() returns as expected", {
   expect_is(x <- rwtbl_add_rise_vars(good_tbl, good_ui), "tbl_df")
   expect_equal(nrow(x), nrow(good_tbl))
-  expect_true(all(names(x) %in% expt_cols))
-  expect_true(all(expt_cols %in% names(x)))
+  expect_true(all(names(x) %in% rise_json_req_obj))
+  expect_true(all(rise_json_req_obj %in% names(x)))
 })
