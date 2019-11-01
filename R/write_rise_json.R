@@ -37,7 +37,7 @@
 #' # get the rest of the parameters automatically
 #' rise_tbl <- rwtbl_add_rise_vars(rwtbl, ui_vars)
 #'
-#' # add then convert to the RISE json format
+#' # and then convert to the RISE json format
 #' rise_json <- tbl_to_rise_json(rise_tbl)
 #'
 #' # finally write the file
