@@ -23,7 +23,7 @@ test_that("write_rise_json works", {
   expect_error(write_rise_json(c(json_char, "afa"), "randompathnottoexist"))
   expect_error(write_rise_json(json_char, c(".", ".")))
   expect_error(write_rise_json(json_char))
-browser()
+
   expect_identical(write_rise_json(json_char, opath), json_char)
 
   # check that there is a file that matches the expected .json pattern
