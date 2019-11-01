@@ -10,18 +10,18 @@ bad_tbl2 <- rdf_to_rwtbl2(ifile, keep_cols = keep_cols)
 good_tbl <- rdf_to_rwtbl2(ifile, keep_cols = keep_cols, scenario = "DNF,CT,IG")
 
 bad_ui <- list(
-  sourceCode = "CRSS - Test Data",
+  sourceCode = "CRSS-TestData",
   modelNameSourceCode = "CRSS",
   status = "testing"
 )
 bad_ui2 <- list(
-  sourceCode = "CRSS - Test Data",
+  sourceCode = "CRSS-TestData",
   modelNameSourceCode = "CRSS",
   status = c("testing", "and more testing"),
   modelRunDescription = "test description"
 )
 good_ui <- list(
-  sourceCode = "CRSS - Test Data",
+  sourceCode = "CRSS-TestData",
   modelNameSourceCode = "CRSS",
   status = "testing",
   modelRunDescription = "test description"

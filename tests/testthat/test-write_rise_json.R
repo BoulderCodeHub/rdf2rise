@@ -1,13 +1,13 @@
 # setup ----------------------
 my_time <- as.POSIXct("1983-11-05 11:59:59", format = "%Y-%m-%d %H:%M:%S")
-json_char <- '\"modelRunSourceCode\":\"DNF,CT,IG\",\"sourceCode\":\"CRSS-BasinStudy\",\"dateTime\":\"2012-12-31 12:00:00-07:00\"'
-source_code <- "CRSS-BasinStudy"
+json_char <- '\"modelRunSourceCode\":\"DNF,CT,IG\",\"sourceCode\":\"CRSS-TestData\",\"dateTime\":\"2012-12-31 12:00:00-07:00\"'
+source_code <- "CRSS-TestData"
 # .json file pattern:
 file_pattern <- paste0(source_code, "_", "[0-9]{16}", ".json")
 
 # TODO: add in test of actual json character from the test rdf data.
 full_json <- scan(
-  "../CRSS-BasinStudy_2019110110394311.json",
+  "../CRSS-TestData_2019110111092669.json",
   what = character(),
   sep = "\n",
   quiet = TRUE
