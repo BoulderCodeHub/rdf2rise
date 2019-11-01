@@ -1,7 +1,19 @@
 # setup ----------------------
 my_time <- as.POSIXct("1983-11-05 11:59:59", format = "%Y-%m-%d %H:%M:%S")
 json_char <- '\"modelRunSourceCode\":\"DNF,CT,IG\",\"sourceCode\":\"CRSS-BasinStudy\",\"dateTime\":\"2012-12-31 12:00:00-07:00\"'
+source_code <- "CRSS-BasinStudy"
+# .json file pattern:
+file_pattern <- paste0(source_code, "_", "[0-9]{16}", ".json")
+
 # TODO: add in test of actual json character from the test rdf data.
+full_json <- scan(
+  "../CRSS-BasinStudy_2019110110394311.json",
+  what = character(),
+  sep = "\n",
+  quiet = TRUE
+)
+
+full_json <- paste(full_json, collapse = "\n")
 
 opath <- tempdir()
 
@@ -11,20 +23,29 @@ test_that("write_rise_json works", {
   expect_error(write_rise_json(c(json_char, "afa"), "randompathnottoexist"))
   expect_error(write_rise_json(json_char, c(".", ".")))
   expect_error(write_rise_json(json_char))
-
+browser()
   expect_identical(write_rise_json(json_char, opath), json_char)
-  # TODO: update this - it should have the format as below, but it will be
-  # based on the time the file was created, not the my_time variable.
-  # expect_true(
-  #   file.exists(file.path(opath, "CRSS-BasinStudy_198311051159599900.json"))
-  # )
+
+  # check that there is a file that matches the expected .json pattern
+  files <- list.files(opath)
+  expect_true(any(x <- stringr::str_detect(files, file_pattern)))
+  file.remove(file.path(opath, files[x]))
+  # do it a second time with full data
+  expect_identical(write_rise_json(full_json, opath), full_json)
+
+  # check that there is a file that matches the expected .json pattern
+  files <- list.files(opath)
+  expect_equal(sum(stringr::str_detect(files, file_pattern)), 1)
 })
 
 # parse_sourceCode ----------------------------
 
 test_that("parse_sourceCode works", {
   expect_length(x <- rdf2rise:::parse_sourceCode(json_char), 1)
-  expect_identical(x, "CRSS-BasinStudy")
+  expect_identical(x, source_code)
+
+  expect_length(x <- rdf2rise:::parse_sourceCode(full_json), 1)
+  expect_identical(x, source_code)
 })
 
 # parse_ms --------------------------
