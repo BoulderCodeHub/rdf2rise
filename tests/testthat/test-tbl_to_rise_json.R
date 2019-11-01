@@ -32,6 +32,7 @@ remove_lastUpdate <- function(x)
   )
 
   x <- simplify2array(stringr::str_split(x, lu_pattern))
+  print(paste0("***** X:\n", x))
   x <- paste(x[1,], x[2,],sep = '')
   x
 }
@@ -51,9 +52,7 @@ test_that("tbl_to_rise_json matches as expected", {
   # split into 10 entries, remove lastUpdate, and then collapse
   x2 <- t(stringr::str_split_fixed(x, "\n", 10))
   expect_equal(dim(x2), c(10, 1))
-  x3 <- x2  %>%
-    remove_lastUpdate() %>%
-    paste(collapse = "\n")
+  x3 <- paste(remove_lastUpdate(x2), collapse = "\n")
   expect_identical(x3, test_json)
 })
 
