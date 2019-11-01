@@ -17,8 +17,14 @@
 tbl_to_rise_json <- function(tbl)
 {
   nn <- names(tbl)
-  assert_that(nn %in% rise_json_req_obj)
-  assert_that(rise_json_req_obj %in% nn)
+  assert_that(
+    all(nn %in% rise_json_req_obj) & all(rise_json_req_obj %in% nn),
+    msg = paste(
+      "`tbl` should only have required json objects as column names.,
+      See `?rise_json_req_obj`",
+      sep = "\n"
+    )
+  )
 
   # for every row in rdf:
 
