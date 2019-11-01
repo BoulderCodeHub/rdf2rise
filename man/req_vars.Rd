@@ -13,8 +13,8 @@ rise_json_req_obj
 }
 \description{
 \code{rwtbl_cols_for_rise()} contains the columns that are required from the
-rdf file to ensure rdf2rise can fill in all required objects for RISE. This
-should be passed to \code{\link[RWDataPlyr:rdf_to_rwtbl2]{RWDataPlyr::rdf_to_rwtbl2()}} as the \code{keep_cols}
+rdf file to ensure rdf2rise can fill in all required json objects for RISE.
+This should be passed to \code{\link[RWDataPlyr:rdf_to_rwtbl2]{RWDataPlyr::rdf_to_rwtbl2()}} as the \code{keep_cols}
 argument. \code{rise_json_req_obj()} contains all of the required json objects for
 RISE. All of these will be returned by \code{\link[=rwtbl_add_rise_vars]{rwtbl_add_rise_vars()}}, but this
 could be used if you are creating your own tbl to pass to
