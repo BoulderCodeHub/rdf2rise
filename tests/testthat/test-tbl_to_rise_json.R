@@ -50,7 +50,6 @@ test_that("META - remove_lastUpdate test function is robust to GMT offsests", {
   expect_identical(remove_lastUpdate(test_json), remove_lastUpdate(gmt_plus))
 })
 
-
 # tbl_to_rise_json ---------------------------
 test_json <- paste(remove_lastUpdate(test_json), collapse = "\n")
 
@@ -66,7 +65,7 @@ test_that("tbl_to_rise_json matches as expected", {
   x2 <- t(stringr::str_split_fixed(x, "\n", 10))
   expect_equal(dim(x2), c(10, 1))
   x3 <- paste(remove_lastUpdate(x2), collapse = "\n")
+  print(paste0("x3: ", x3))
+  print(paste0("test_json: ", test_json))
   expect_equal(x3, test_json)
 })
-
-
