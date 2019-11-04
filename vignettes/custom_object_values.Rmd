@@ -1,0 +1,161 @@
+---
+title: "Cusomizing RISE json Object Values"
+author: "Alan Butler"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Cusomizing RISE json Object Values}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+rdf2rise automates the creation of RISE json files from RiverWAre rdf files. To do this, it makes intelligent guesses about certain fields. However, it might be necessary for the user to want to override these guesses or provide more detail than the RiverWare rdf file includes. This vignette provides a short example of how to customize the RISE json object values.
+
+For the example, we will use an example rdf file in the RWDataPlyr package, and need to convert it to an rwtbl using `RWDataPlyr::rdf_to_rwtbl2()`. We'll also rely on dplyr for editing the resulting tbl. 
+
+```{r setup, warning=FALSE, message=FALSE}
+library(rdf2rise)
+library(RWDataPlyr)
+library(dplyr)
+```
+
+## Default process
+
+As a review, the default rdf2rise process consists of three main steps:
+
+1 - start with an rdf file and convert it to a rwtbl using RWDataPlyr.
+
+2 - specify the user provided object values.
+
+3 - chain the rdf2rise functions together for a final result. 
+
+*Note, this example will add all slots that are found in the provided rdf file to the json file.* So, it will include monthly data for the `Powell.Outflow` and `Mead.Pool Elevation` RiverWare slots.
+
+```{r defaultProc}
+# 1 -------------
+ifile <- system.file(
+  'extdata/Scenario/ISM1988_2014,2007Dems,IG,Most',
+  "KeySlots.rdf",
+ package = "RWDataPlyr"
+)
+
+# get the tbl using RWDataPlyr
+rwtbl <- RWDataPlyr::rdf_to_rwtbl2(
+  ifile,
+  scenario = "ISM1988_2014,2007Dems,IG,Most",
+  keep_cols = rwtbl_cols_for_rise
+)
+
+# 2 -------------
+ui_vars = list(
+  sourceCode = "CRSS-TestData",
+  modelNameSourceCode = "CRSS",
+  status = "Finalized Dec. 2012. To RISE v0.0.1",
+  modelRunDescription = "desc"
+)
+
+# 3 --------------
+rise_tbl <- rwtbl %>% 
+  rwtbl_add_rise_vars(ui_vars)
+  
+rise_json <- tbl_to_rise_json(rise_tbl)
+
+# can write out to finish process
+# write_rise_json(rise_json, path = tempdir())
+```
+
+## Custom object values
+
+In the default process, rdf2rise uses the specified `Object` (from the rwtbl) for the `locationSourceCode`, and creates the `modelRunAttributes` object from `rwtbl$InputDMINAme`, `rwtbl$RulesetFileName`, and `attributes(rwtbl)`. This results in `locationSourceCode`s of "Mead" and "Powell", and `modelRunAttributes` of "`r rise_tbl$modelRunAttributes[1]`".
+
+Suppose that the "Mead" value of `locationSourceCode` needs to be changed to "Lake Mead" in order to match the entry in RISE, and that you want to provide more detail in the `modelRunAttributes` based on the scenario naming convention you use. The scenario name: "ISM1988_2014,2007Dems,IG,Most" indicates the hydrology, demands, policy, and initial conditions that are used in that order, and this information can be added to the `modelRunAttributes` field. To do this, it is helpful to write an aditional function that will help handle the update:
+
+```{r new_atts} 
+update_modelRunAttributes <- function(atts, scenario)
+{
+  # split the scenario into its different components and append those onto the 
+  # existing attributes
+  
+  scenario <- stringr::str_split_fixed(scenario, ",", 4)
+  
+  atts <- paste0(
+    atts, 
+    " Hydrology: ", scenario[,1], "; ",
+    "Demands: ", scenario[,2], "; ",
+    "Policy: ", scenario[,3], "; ",
+    "Initial conditions: ", scenario[,4], ";"
+  )
+  
+  atts
+}
+```
+
+The provided example function (`update_modelRunAttributes()`) will take in the `modelRunAttributes` and `modelRunSourceCode` (the scenario name) object/variables and update the `modelRunAttributes` based on the specified hydrology, demand, policy, and initial conditions. Additionally, if you know more details about a particular scenario, e.g., what ISM1988_2014 means, you can also create a mapping from the specified scenario to a longer form, and update `update_modelRunAttributes()` to use the mapping. This will work well if you are processing multiple scenarios and want to map all of their abbreviations to longer descriptions. 
+
+```{r hydroMap}
+hydrology_name_map <- c(
+  "ISM1988_2014" = 
+    "Index sequential method applied to the 1988-2014 osberved hydrology.",
+  "DNF" = "Index sequential method applied to the 1906-2014 observed hydrology."
+)
+
+update_modelRunAttributes <- function(atts, scenario)
+{
+  # split the scenario into its different components and append those onto the 
+  # existing attributes
+  
+  scenario <- stringr::str_split_fixed(scenario, ",", 4)
+  
+  atts <- paste0(
+    atts, 
+    " Hydrology: ", hydrology_name_map[scenario[,1]], "; ",
+    "Demands: ", scenario[,2], "; ",
+    "Policy: ", scenario[,3], "; ",
+    "Initial conditions: ", scenario[,4], ";"
+  )
+  
+  atts
+}
+```
+
+Then, after adding in the RISE json objects, but before converting it to RISE json format, use `dplyr::mutate()` to update the `modelRunAttributes` and `locationSourceCode` variables. 
+
+```{r customVals}
+rise_tbl2 <- rwtbl %>% 
+  rwtbl_add_rise_vars(ui_vars) %>%
+  mutate(
+    locationSourceCode = if_else(
+      locationSourceCode == "Mead", 
+      "Lake Mead", 
+      locationSourceCode
+    ),
+    modelRunAttributes = 
+      update_modelRunAttributes(modelRunAttributes, modelRunSourceCode)
+  )
+  
+rise_json2 <- tbl_to_rise_json(rise_tbl2)
+```
+
+For comparison, here is the resulting output (before being converted to json) for the original and customized entries for 3/16 objects:
+
+```{r results, echo=FALSE}
+(rise_tbl %>%
+  filter(locationSourceCode == "Mead") %>% 
+  select(locationSourceCode, parameterSourceCode, result))[1:5,]
+(rise_tbl2 %>%
+  filter(locationSourceCode == "Lake Mead") %>%
+  select(locationSourceCode, parameterSourceCode, result))[1:5,]
+```
+
+And the resulting `modelRunAttributes` are now "`r rise_tbl2$modelRunAttributes[1]`" instead of "`r rise_tbl$modelRunAttributes[1]`". 
+
+## Conclusion
+
+This same methodology can be applied to customize any of the object values and for any level of complexity. 
