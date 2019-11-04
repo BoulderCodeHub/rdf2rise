@@ -1,4 +1,5 @@
 library(RWDataPlyr)
+library(magrittr)
 # setup -------------------------------
 test_json <- scan(
   "../CRSS-TestData_2019110112212725.json",
@@ -40,18 +41,47 @@ remove_lastUpdate <- function(x)
 
   x <- simplify2array(stringr::str_split(x, lu_pattern))
   #print(paste0("***** X:\n", x))
-  x <- paste(x[1,], x[2,],sep = '')
+  x <- paste0(x[1,], x[2,])
   x
+}
+
+remove_modelRunDateTime_offset <- function(x)
+{
+  # 'somestuff\"modelRunDateTime\":\"2017-07-25 14:27:00+00:00\"morestuff'
+  lu_pattern <- paste(
+    '\"modelRunDateTime\":\"\\d{4}-\\d{2}-\\d{2}',
+    '\\d{2}:\\d{2}:\\d{2}[-|+]\\d{2}:\\d{2}\"'
+  )
+
+  modelRunDateTime <- stringr::str_extract(x, lu_pattern) %>%
+    # remove the offset
+    stringr::str_split_fixed('[-|+]\\d{2}:\\d{2}', 2)
+
+  before_after <- stringr::str_split_fixed(x, lu_pattern, 2)
+
+  paste0(before_after[,1], modelRunDateTime[,1], modelRunDateTime[,2], before_after[,2])
 }
 
 # meta testing -------------------------------
 # test the remove_lastUpdate to ensure it works with + and - GMT offsets
 test_that("META - remove_lastUpdate test function is robust to GMT offsests", {
-  expect_identical(remove_lastUpdate(test_json), remove_lastUpdate(gmt_plus))
+  t1 <- remove_lastUpdate(test_json)
+  t2 <- remove_lastUpdate(gmt_plus)
+  expect_identical(t1, t2)
+
+  t1 <- remove_modelRunDateTime_offset(t1)
+  t2 <- remove_modelRunDateTime_offset(t2)
+  expect_identical(t1, t2)
+
+  t1 <- paste(t1, collapse = "\n")
+  t2 <- paste(t2, collapse = "\n")
+  expect_identical(t1, t2)
 })
 
 # tbl_to_rise_json ---------------------------
-test_json <- paste(remove_lastUpdate(test_json), collapse = "\n")
+test_json <- remove_lastUpdate(test_json) %>%
+  remove_modelRunDateTime_offset() %>%
+  paste(collapse = "\n")
 
 test_that("tbl_to_rise_json matches as expected", {
   expect_type(x <- tbl_to_rise_json(rise_tbl), "character")
@@ -64,7 +94,9 @@ test_that("tbl_to_rise_json matches as expected", {
   # split into 10 entries, remove lastUpdate, and then collapse
   x2 <- t(stringr::str_split_fixed(x, "\n", 10))
   expect_equal(dim(x2), c(10, 1))
-  x3 <- paste(remove_lastUpdate(x2), collapse = "\n")
+  x3 <- remove_lastUpdate(x2) %>%
+    remove_modelRunDateTime_offset() %>%
+    paste(collapse = "\n")
   print(paste0("x3: ", x3))
   print(paste0("test_json: ", test_json))
   expect_equal(x3, test_json)
