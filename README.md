@@ -119,6 +119,8 @@ rwtbl %>%
 
 ## Log
 
+- 2019-11-04: v0.1.0
+
 ## Disclaimer
 
 This software is in the public domain because it contains materials that originally came from the U.S. Bureau of Reclamation, an agency of the United States Department of Interior.
