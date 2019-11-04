@@ -2,7 +2,7 @@ rdf2rise
 ========================
 
 <!-- badges: start -->
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rabutler-usbr/rdf2rise?branch=master&svg=true)](https://ci.appveyor.com/project/rabutler-usbr/rdf2rise)  [![Travis build status](https://travis-ci.org/BoulderCodeHub/rdf2rise.svg?branch=master)](https://travis-ci.org/BoulderCodeHub/rdf2rise)  [![Codecov test coverage](https://codecov.io/gh/BoulderCodeHub/rdf2rise/branch/master/graph/badge.svg)](https://codecov.io/gh/BoulderCodeHub/rdf2rise?branch=master)
+[![Appveyor build](https://ci.appveyor.com/api/projects/status/580nvuavt8c7mnar?svg=true)](https://ci.appveyor.com/project/rabutler-usbr/rdf2rise-63aa8) [![Travis build status](https://travis-ci.org/BoulderCodeHub/rdf2rise.svg?branch=master)](https://travis-ci.org/BoulderCodeHub/rdf2rise)  [![Codecov test coverage](https://codecov.io/gh/BoulderCodeHub/rdf2rise/branch/master/graph/badge.svg)](https://codecov.io/gh/BoulderCodeHub/rdf2rise?branch=master)
 <!-- badges: end -->
 
 
