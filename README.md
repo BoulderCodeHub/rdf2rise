@@ -49,7 +49,7 @@ rdf2rise creates the necessary json file for RISE by converting an rwtbl (conver
 | `modelRunAttributes` | from `rwtbl$InputDMINAme`, `rwtbl$RulesetFileName`, and `attributes(rwtbl)`** |
 | `modelRunMemberSourceCode` | = `rwtbl$TraceNumber` |
 | `modelRunMemberDesc` | `rwtbl$Scenario` and `rwtbl$TraceNumber`*** |
-| `modelRunDateTime` | `attributes(rwtbl)$create_date)` |
+| `modelRunDateTime` | `attributes(rwtbl)$create_date)`**** |
 | `modelNameSourceCode` | UI |
 
 *Clarifying notes:*
@@ -59,6 +59,8 @@ rdf2rise creates the necessary json file for RISE by converting an rwtbl (conver
 ** The `modelRunAttributes` object is constructed by pasting together the `InputDMIName` and`RulesetFileName` (filename only, not complete file path) variables/columns, along with the `mrm_config_name` and  `description` attributes of the rwtbl. `RWDataPlyr::rdf_to_rwtbl2()` sets these two attributes in the rwtbl from information RiverWare saves in the rdf file. `modelRunAttributes` is a character vector of key value pairs that are `;` seperated. Ex: `"Ruleset: rules.rls; Input DMI: Some input DMI; MRM Config: MRM Configuration; MRM Desc: a longer desription;"`.
 
 *** `modelRunMemberDesc` is constructed as `Scenario - Trace N`, ex: `DNF,CT,IG - Trace 22`. 
+
+**** RISE requires an offset from GMT, which is not output included from RiverWare. So, rdf2rise assumes that the GMT offset is the same for the model data as it is for the computer runing the rdf2rise code.
 
 ### Example process
 
