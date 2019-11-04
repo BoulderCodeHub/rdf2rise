@@ -16,7 +16,7 @@ rdf2rise can be installed from GitHub:
 
 ```
 # install.packages("devtools")
-devtools::install_github("BoulderCodeHub/rdf2rise")
+devtools::install_github("BoulderCodeHub/rdf2rise", build_vignettes = TRUE)
 ```
 
 ## Usage
@@ -31,7 +31,7 @@ The following sections present how `rwtbl_add_rise_vars()` creates the required 
 
 ### Constructing json object from rwtbl
 
-rdf2rise creates the necessary json file for RISE by converting an rwtbl (converted from an rdf file) to a json object as one long string. RISE requires 16 json objects to fully describe each entry in the database. rdf2rise creates these objects from the rwtbl and user input (`rwtbl_add_rise_vars()`). The table below summarizes the required json objects and what rwtbl variables are used to create them. **Link to RISE for full description of the json objects.** It is up to the user to ensure the RISE json object values created here match those they have provided to RISE in the data identification steps. The values created by `rwtbl_add_rise_vars()` can be overwritten before creating the RISE json object using `dplyr::mutate()` or similar.
+rdf2rise creates the necessary json file for RISE by converting an rwtbl (converted from an rdf file) to a json object as one long string. RISE requires 16 json objects to fully describe each entry in the database. rdf2rise creates these objects from the rwtbl and user input (`rwtbl_add_rise_vars()`). The table below summarizes the required json objects and what rwtbl variables are used to create them. **Link to RISE for full description of the json objects.** It is up to the user to ensure the RISE json object values created here match those they have provided to RISE in the data identification steps. The values created by `rwtbl_add_rise_vars()` can be overwritten before creating the RISE json object using `dplyr::mutate()` or similar (see `vignette('custom_object_values', package = 'rdf2rise')`).
 
 | Required RISE json object | How is json object constructed? |
 | --- | --- |
@@ -64,7 +64,7 @@ rdf2rise creates the necessary json file for RISE by converting an rwtbl (conver
 
 ### Example process
 
-The defults values of the json objects can be modified using `dplyr::mutate` or similar. **See the vignette for more examples.**
+The defults values of the json objects can be modified using `dplyr::mutate` or similar. See the "Cusomizing RISE json Object Values" (`vignette('custom_object_values', package = 'rdf2rise')`) vignette for an exmaple on modifying the default json objects values. 
 
 1 - start with an rdf file and convert it to a rwtbl using RWDataPlyr.
 
@@ -111,7 +111,7 @@ rwtbl %>%
   # ** dplyr::mutate() here to overwrite default values
 
   # and then convert to the RISE json format
-  rise_json <- tbl_to_rise_json() %>%
+  tbl_to_rise_json() %>%
 
   # finally write the file (replace tempdir())
   write_rise_json(path = tempdir())
