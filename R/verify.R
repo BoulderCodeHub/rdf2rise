@@ -56,7 +56,7 @@ check_char_count <- function(x)
 # ensure the rwtbl has all required columns
 check_rwtbl <- function(rwtbl)
 {
-  assert_that(is(rwtbl, "tbl_df"))
+  assert_that(methods::is(rwtbl, "tbl_df"))
 
   rwtbl_req_cols <- c(rwtbl_cols_for_rise, "Scenario", "ObjectSlot")
 
