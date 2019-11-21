@@ -75,7 +75,7 @@ rwtbl_add_rise_vars <- function(rwtbl, ui_vars)
       modelRunAttributes =
         get_modelRunAttributes(InputDMIName, RulesetFileName, tbl_atts),
       modelRunDateTime = run_date,
-      resultAttributes = "null",
+      resultAttributes = NA_character_,
       modelRunName = Scenario,
       modelRunMemberDesc = paste0(Scenario," - Trace ", TraceNumber),
       modelNameSourceCode = ui_vars$modelNameSourceCode,

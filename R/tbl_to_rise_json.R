@@ -61,8 +61,7 @@ tbl_to_rise_json <- function(tbl)
   )
 
   # for every row in rdf:
-
-  r3 <- jsonlite::toJSON(tbl, auto_unbox = TRUE)
+  r3 <- jsonlite::toJSON(tbl, auto_unbox = TRUE, na = "null")
   r3 <- as.character(r3)
   r3 <- stringr::str_remove(r3, "\\[")
   r3 <- stringr::str_remove(r3, "\\]")
